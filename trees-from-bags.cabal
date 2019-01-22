@@ -43,7 +43,6 @@ build-type:          Simple
 -- README.
 extra-source-files:  ChangeLog.md
 
-
 common base
   default-language: Haskell2010
   ghc-options: -Wall
@@ -76,6 +75,7 @@ executable trees-from-bags
   main-is:             Main.hs
 
   build-depends:       base >=4.12 && <4.13
+                      ,bound
                       ,naive-lam-tree
                       ,debruijn-lam-tree
                       ,lam-tree
