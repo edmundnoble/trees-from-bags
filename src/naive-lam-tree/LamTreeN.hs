@@ -16,10 +16,10 @@ import Data.Void
 
 import Common
 
-newtype VarAST v (lt :: * -> *) = VarAST v deriving newtype Show
-newtype LamAST v (lt :: * -> *) = LamAST (lt v) deriving newtype Show
-newtype LitAnn (v :: *) (lt :: * -> *) = LitAnn () deriving newtype Show
-data Extra (v :: *) (lt :: * -> *) deriving Show
+newtype VarAST (lt :: * -> *) v = VarAST v deriving newtype Show
+newtype LamAST (lt :: * -> *) v = LamAST (lt v) deriving newtype Show
+newtype LitAnn (lt :: * -> *) (v :: *) = LitAnn () deriving newtype Show
+data Extra (lt :: * -> *) (v :: *) deriving Show
 -- self-recursive!
-newtype AppArgAST (v :: *) lt = AppArgAST (lt v) deriving newtype Show
-newtype AppFunAST (v :: *) lt = AppFunAST (lt v) deriving newtype Show
+newtype AppArgAST lt (v :: *) = AppArgAST (lt v) deriving newtype Show
+newtype AppFunAST lt (v :: *) = AppFunAST (lt v) deriving newtype Show

@@ -12,13 +12,13 @@ signature LamTreeG(
         Extra,
         ) where
 
-data AppArgAST :: * -> (* -> *) -> *
-data AppFunAST :: * -> (* -> *) -> *
+data AppArgAST :: (* -> *) -> * -> *
+data AppFunAST :: (* -> *) -> * -> *
 
-data LamAST :: * -> (* -> *) -> *
+data LamAST :: (* -> *) -> * -> *
 
-data LitAnn :: * -> (* -> *) -> *
+data LitAnn :: (* -> *) -> * -> *
 
-data VarAST :: * -> (* -> *) -> *
+data VarAST :: (* -> *) -> * -> *
 
-data Extra :: * -> (* -> *) -> *
+data Extra :: (* -> *) -> * -> *
