@@ -56,20 +56,15 @@ library lam-tree
 
 library debruijn-lam-tree
   import: base
-  build-depends:   common, bound, transformers
+  build-depends:   bound, transformers
   exposed-modules: LamTreeB
   hs-source-dirs:  src/debruijn-lam-tree
 
 library naive-lam-tree
   import:          base
-  build-depends:   common, transformers
+  build-depends:   transformers
   exposed-modules: LamTreeN
   hs-source-dirs:  src/naive-lam-tree
-
-library common
-  import:          base
-  exposed-modules: Common
-  hs-source-dirs:  src/common
 
 executable trees-from-bags
   main-is:             Main.hs

@@ -1,4 +1,5 @@
 {-# language EmptyDataDeriving #-}
+{-# language DeriveAnyClass #-}
 {-# language DerivingStrategies #-}
 {-# language GeneralizedNewtypeDeriving #-}
 {-# language TypeFamilies #-}
@@ -13,8 +14,6 @@ module LamTreeN(
 
 import Control.Monad.Trans.Identity
 import Data.Void
-
-import Common
 
 newtype VarAST (lt :: * -> *) v = VarAST v deriving newtype Show
 
