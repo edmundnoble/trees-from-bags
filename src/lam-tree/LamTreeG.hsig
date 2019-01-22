@@ -1,0 +1,7 @@
+{-# language TypeFamilies #-}
+
+signature LamTreeG(LamA, AppA, LitA) where
+
+type family LamA a :: *
+type family AppA a :: *
+type family LitA :: *
