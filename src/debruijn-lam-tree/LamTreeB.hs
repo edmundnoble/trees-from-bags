@@ -39,10 +39,12 @@ newtype LitAnn (lt :: * -> *) (v :: *) = LitAnn ()
 
 data Extra (lt :: * -> *) (v :: *)
         deriving (Show, Show1)
+
 -- self-recursive!
 newtype AppArgAST lt (v :: *) = AppArgAST (lt v)
         deriving newtype Show
         deriving Show1
+
 newtype AppFunAST lt (v :: *) = AppFunAST (lt v)
         deriving newtype Show
         deriving Show1
