@@ -1,7 +1,24 @@
-{-# language TypeFamilies #-}
+{-# language KindSignatures #-}
+{-# language RoleAnnotations #-}
 
-signature LamTreeG(LamA, AppA, LitA) where
+-- "backpack",
+-- "pattern functors",
+-- "trees that grow",
+-- and "higher-kinded data".
+signature LamTreeG(
+        AppArgAST, AppFunAST,
+        LamAST, LitAnn,
+        VarAST,
+        Extra,
+        ) where
 
-type family LamA a :: *
-type family AppA a :: *
-type family LitA :: *
+data AppArgAST :: * -> (* -> *) -> *
+data AppFunAST :: * -> (* -> *) -> *
+
+data LamAST :: * -> (* -> *) -> *
+
+data LitAnn :: * -> (* -> *) -> *
+
+data VarAST :: * -> (* -> *) -> *
+
+data Extra :: * -> (* -> *) -> *

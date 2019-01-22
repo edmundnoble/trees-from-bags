@@ -55,30 +55,36 @@ library lam-tree
   exposed-modules: LamTree
   signatures: LamTreeG
 
-library instantiated
+library debruijn-lam-tree
   import: base
-  hs-source-dirs: src/instantiated
-  exposed-modules: LamTreeC
+  build-depends:   common, bound, transformers
+  exposed-modules: LamTreeB
+  hs-source-dirs:  src/debruijn-lam-tree
 
-  -- LANGUAGE extensions used by modules in this package.
-  -- other-extensions:
+library naive-lam-tree
+  import:          base
+  build-depends:   common, transformers
+  exposed-modules: LamTreeN
+  hs-source-dirs:  src/naive-lam-tree
 
-  -- Other library packages from which modules are imported.
-
-  -- Directories containing source files.
-  hs-source-dirs:      src/instantiated
-
-  reexported-modules:
-
+library common
+  import:          base
+  exposed-modules: Common
+  hs-source-dirs:  src/common
 
 executable trees-from-bags
   main-is:             Main.hs
 
   build-depends:       base >=4.12 && <4.13
-                      ,instantiated
+                      ,naive-lam-tree
+                      ,debruijn-lam-tree
                       ,lam-tree
 
-  mixins: lam-tree (LamTree as Instantiated.LamTree) requires (LamTreeG as LamTreeC)
+  mixins:
+    lam-tree (LamTree as InstantiatedNaive.LamTree)
+      requires (LamTreeG as LamTreeN),
+    lam-tree (LamTree as InstantiatedDeBruijn.LamTree)
+      requires (LamTreeG as LamTreeB)
 
   hs-source-dirs:      src/main
 

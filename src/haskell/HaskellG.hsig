@@ -1,0 +1,5 @@
+signature HaskellG() where
+
+data AST :: * -> *
+
+data LamA :: * -> *
