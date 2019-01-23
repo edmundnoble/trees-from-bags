@@ -14,9 +14,9 @@ import qualified LamTreeN as LTN
 -- it's unfortunate that this isn't checked :/
 {-# complete AppN, LamN, LitN, VarN #-}
 pattern AppN li ri
-        = LTN.AppR (LTN.AppFunAST li) (LTN.AppArgAST ri)
+        = LTN.AppR (IdentityT li) (IdentityT ri)
 pattern LamN m
-        = LTN.LamR (LTN.LamAST m)
+        = LTN.LamR (IdentityT m)
 pattern LitN i
         = LTN.LitR i (())
 pattern VarN i

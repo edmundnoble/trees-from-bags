@@ -47,23 +47,26 @@ instance (
         ) =>
         Show1 LamTree where
         liftShowsPrec sp sl p (AppR f l) =
-                showsPrec p "AppR" .
-                        liftShowsPrec sp sl p f .
-                                liftShowsPrec sp sl p l
+                ("AppR " ++) .
+                liftShowsPrec sp sl p f .
+                (" " ++) .
+                liftShowsPrec sp sl p l
         liftShowsPrec sp sl p (VarR v ann) =
-                showsPrec p "VarR" .
-                        sp p v .
-                                showsPrec p ann
+                ("VarR " ++) .
+                sp p v .
+                (" " ++) .
+                showsPrec p ann
         liftShowsPrec sp sl p (LamR l) =
-                showsPrec p "LamR" .
-                        liftShowsPrec sp sl p l
+                ("LamR " ++) .
+                liftShowsPrec sp sl p l
         liftShowsPrec sp sl p (LitR i ann) =
-                showsPrec p "LamR" .
-                        showsPrec p i .
-                                showsPrec p ann
+                ("LitR " ++) .
+                showsPrec p i .
+                (" " ++) .
+                showsPrec p ann
         liftShowsPrec sp sl p (ExtraR e) =
-                showsPrec p "ExtraR" .
-                        liftShowsPrec sp sl p e
+                ("ExtraR " ++) .
+                liftShowsPrec sp sl p e
 
 deriving stock instance (
         Functor (AppArgAST LamTree),

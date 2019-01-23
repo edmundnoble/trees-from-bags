@@ -16,9 +16,7 @@ module LamTreeB(
 import Bound
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
-import Data.Pointed
 import Data.Functor.Classes
-import Data.Void
 
 -- all of these kind annotations are needed because backpack doesn't accept
 -- extra polymorphism in the structure over what's in the signature.

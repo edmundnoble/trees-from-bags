@@ -13,8 +13,10 @@ module LamTreeN(
         LamAST(..),
         AppArgAST(..), AppFunAST(..)) where
 
+import Bound
+import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
-import Data.Void
+import Data.Functor.Classes
 
 -- all of these kind annotations are needed because backpack doesn't accept
 -- extra polymorphism in the structure over what's in the signature.
@@ -23,10 +25,20 @@ type VarAnn = ()
 
 type LitAnn = ()
 
-newtype LamAST (lt :: * -> *) v = LamAST (lt v) deriving newtype Show
+type LamAST = IdentityT
 
-data Extra (lt :: * -> *) (v :: *) deriving anyclass Show
+data Extra (lt :: * -> *) (v :: *)
+        deriving anyclass Functor
+        deriving anyclass Applicative
+        deriving anyclass Monad
+        deriving anyclass Show
 
-newtype AppArgAST lt (v :: *) = AppArgAST (lt v) deriving newtype Show
+instance MonadTrans Extra where
+instance Bound Extra where
 
-newtype AppFunAST lt (v :: *) = AppFunAST (lt v) deriving newtype Show
+instance Show1 (Extra lt) where
+        liftShowsPrec _ _ = showsPrec
+
+type AppArgAST = IdentityT
+
+type AppFunAST = IdentityT

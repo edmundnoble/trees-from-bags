@@ -72,7 +72,7 @@ library debruijn-lam-tree
   hs-source-dirs:  src/debruijn-lam-tree
 
 library naive-lam-tree
-  import:          base, pointed, transformers
+  import:          base, bound, pointed, transformers
   exposed-modules: LamTreeN
   hs-source-dirs:  src/naive-lam-tree
 
