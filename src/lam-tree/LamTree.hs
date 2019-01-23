@@ -26,7 +26,6 @@ data LamTree v
         | LitR Int LitAnn
         | ExtraR (Extra LamTree v)
 
--- woohoo, recursion!
 deriving stock instance (
         Show (AppFunAST LamTree v),
         Show (AppArgAST LamTree v),
@@ -38,7 +37,6 @@ deriving stock instance (
         ) =>
         Show (LamTree v)
 
--- woohoo, recursion!
 instance (
         Show1 (AppFunAST LamTree),
         Show1 (AppArgAST LamTree),
