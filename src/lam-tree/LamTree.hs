@@ -20,11 +20,11 @@ import Bound
 import LamTreeS
 
 data LamTree v
-        = AppR (AppFunAST LamTree v) (AppArgAST LamTree v)
-        | VarR v VarAnn
-        | LamR (LamAST LamTree v)
-        | LitR Int LitAnn
-        | ExtraR (Extra LamTree v)
+        = AppR !(AppFunAST LamTree v) !(AppArgAST LamTree v)
+        | VarR {-# unpack #-} !v {-# unpack #-} !VarAnn
+        | LamR !(LamAST LamTree v)
+        | LitR {-# unpack #-} !Int {-# unpack #-} !LitAnn
+        | ExtraR !(Extra LamTree v)
 
 deriving stock instance (
         Show (AppFunAST LamTree v),
