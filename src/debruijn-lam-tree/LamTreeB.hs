@@ -14,6 +14,7 @@ module LamTreeB(
         AppArgAST, AppFunAST) where
 
 import Bound
+import Control.Monad.Trans.Class
 import Control.Monad.Trans.Identity
 import Data.Pointed
 import Data.Functor.Classes
@@ -39,6 +40,9 @@ data Extra (lt :: * -> *) (v :: *)
         deriving anyclass Applicative
         deriving anyclass Monad
         deriving anyclass Show
+
+instance MonadTrans Extra where
+instance Bound Extra where
 
 instance Show1 (Extra lt) where
         liftShowsPrec _ _ = showsPrec
