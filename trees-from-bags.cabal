@@ -48,15 +48,17 @@ common base
   ghc-options: -Wall
   build-depends: base >= 4.10 && < 5
 
+common bound
+  build-depends: bound==2.0.1
+
 library lam-tree
-  import: base
+  import: base, bound
   hs-source-dirs: src/lam-tree
   exposed-modules: LamTree
-  signatures: LamTreeG
+  signatures: LamTreeS
 
 library debruijn-lam-tree
-  import: base
-  build-depends:   bound, transformers
+  import: base, bound
   exposed-modules: LamTreeB
   hs-source-dirs:  src/debruijn-lam-tree
 
@@ -67,19 +69,18 @@ library naive-lam-tree
   hs-source-dirs:  src/naive-lam-tree
 
 executable trees-from-bags
-  main-is:             Main.hs
+  import:             base, bound
+  main-is:            Main.hs
 
-  build-depends:       base >=4.12 && <4.13
-                      ,bound
-                      ,naive-lam-tree
-                      ,debruijn-lam-tree
-                      ,lam-tree
+  build-depends:      naive-lam-tree
+                     ,debruijn-lam-tree
+                     ,lam-tree
 
   mixins:
     lam-tree (LamTree as InstantiatedNaive.LamTree)
-      requires (LamTreeG as LamTreeN),
+      requires (LamTreeS as LamTreeN),
     lam-tree (LamTree as InstantiatedDeBruijn.LamTree)
-      requires (LamTreeG as LamTreeB)
+      requires (LamTreeS as LamTreeB)
 
-  hs-source-dirs:      src/main
+  hs-source-dirs:     src/main
 

@@ -6,7 +6,7 @@
 {-# language PolyKinds #-}
 
 module LamTreeB(
-        VarAST(..),
+        VarAnn(..),
         LitAnn(..),
         Extra(..),
         LamAST(..),
@@ -17,11 +17,11 @@ import Control.Monad.Trans.Identity
 import Data.Functor.Classes
 import Data.Void
 
-newtype VarAST (lt :: * -> *) v = VarAST v
+newtype VarAnn (lt :: * -> *) v = VarAnn ()
         deriving Show
 
-instance Show1 (VarAST lt) where
-        liftShowsPrec sp _ p (VarAST v) = sp p v
+instance Show1 (VarAnn lt) where
+        liftShowsPrec sp _ p (VarAnn v) = sp p v
 
 newtype LamAST (lt :: * -> *) v = LamAST (Scope v lt String)
         deriving newtype Show

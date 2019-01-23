@@ -6,7 +6,7 @@
 {-# language PolyKinds #-}
 
 module LamTreeN(
-        VarAST(..),
+        VarAnn(..),
         LitAnn(..),
         Extra(..),
         LamAST(..),
@@ -15,7 +15,7 @@ module LamTreeN(
 import Control.Monad.Trans.Identity
 import Data.Void
 
-newtype VarAST (lt :: * -> *) v = VarAST v deriving newtype Show
+newtype VarAnn (lt :: * -> *) v = VarAnn () deriving newtype Show
 
 newtype LamAST (lt :: * -> *) v = LamAST (lt v) deriving newtype Show
 

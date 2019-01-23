@@ -5,11 +5,11 @@
 -- "pattern functors",
 -- "trees that grow",
 -- and "higher-kinded data".
-signature LamTreeG(
+signature LamTreeS(
         AppArgAST, AppFunAST,
         LamAST, LitAnn,
-        VarAST,
-        Extra,
+        VarAnn,
+        Extra
         ) where
 
 data AppArgAST :: (* -> *) -> * -> *
@@ -19,6 +19,6 @@ data LamAST :: (* -> *) -> * -> *
 
 data LitAnn :: (* -> *) -> * -> *
 
-data VarAST :: (* -> *) -> * -> *
+data VarAnn :: (* -> *) -> * -> *
 
 data Extra :: (* -> *) -> * -> *
