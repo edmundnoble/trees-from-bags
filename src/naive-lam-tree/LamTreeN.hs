@@ -11,7 +11,7 @@ module LamTreeN(
         LitAnn(..),
         Extra(..),
         LamAST(..),
-        AppArgAST(..), AppFunAST(..)) where
+        AppArgAST, AppFunAST) where
 
 import Bound
 import Control.Monad.Trans.Class
