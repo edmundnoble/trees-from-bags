@@ -1,55 +1,48 @@
 {-# language EmptyDataDeriving #-}
 {-# language DeriveAnyClass #-}
+{-# language DeriveFunctor #-}
 {-# language DerivingStrategies #-}
 {-# language GeneralizedNewtypeDeriving #-}
+{-# language StandaloneDeriving #-}
 {-# language TypeFamilies #-}
-{-# language PolyKinds #-}
 
 module LamTreeB(
         VarAnn(..),
         LitAnn(..),
         Extra(..),
         LamAST(..),
-        AppArgAST(..), AppFunAST(..)) where
+        AppArgAST, AppFunAST) where
 
-import Bound.Scope
+import Bound
 import Control.Monad.Trans.Identity
+import Data.Pointed
 import Data.Functor.Classes
 import Data.Void
 
-newtype VarAnn (lt :: * -> *) v = VarAnn ()
-        deriving Show
+-- all of these kind annotations are needed because backpack doesn't accept
+-- extra polymorphism in the structure over what's in the signature.
 
-instance Show1 (VarAnn lt) where
-        liftShowsPrec sp _ p (VarAnn v) = sp p v
+type VarAnn = ()
 
-newtype LamAST (lt :: * -> *) v = LamAST (Scope v lt String)
+type LitAnn = ()
+
+newtype LamAST (lt :: * -> *) v = LamAST (Scope String lt v)
+        deriving newtype Functor
+        deriving newtype Applicative
+        deriving newtype Monad
+        deriving newtype Bound
         deriving newtype Show
-        deriving Show1
-
-newtype LitAnn (lt :: * -> *) (v :: *) = LitAnn ()
-        deriving newtype Show
-
-instance Show1 (LitAnn lt) where
-        liftShowsPrec _ _ _ _ = id
+        deriving anyclass Show1
 
 data Extra (lt :: * -> *) (v :: *)
-        deriving Show
+        deriving anyclass Functor
+        deriving anyclass Applicative
+        deriving anyclass Monad
+        deriving anyclass Show
 
 instance Show1 (Extra lt) where
         liftShowsPrec _ _ = showsPrec
 
--- self-recursive!
-newtype AppArgAST lt (v :: *) = AppArgAST (lt v)
-        deriving newtype Show
+type AppArgAST = IdentityT
 
-instance Show1 lt => Show1 (AppArgAST lt) where
-        liftShowsPrec sp sl p (AppArgAST l)
-                = liftShowsPrec sp sl p l
-
-newtype AppFunAST lt (v :: *) = AppFunAST (lt v)
-        deriving newtype Show
-
-instance Show1 lt => Show1 (AppFunAST lt) where
-        liftShowsPrec sp sl p (AppFunAST l)
-                = liftShowsPrec sp sl p l
+type AppFunAST = IdentityT

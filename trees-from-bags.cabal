@@ -51,25 +51,33 @@ common base
 common bound
   build-depends: bound==2.0.1
 
+common data-default
+  build-depends: data-default==0.7.1.1
+
+common pointed
+  build-depends: pointed==5.0.1
+
+common transformers
+  build-depends: transformers==0.5.5.0
+
 library lam-tree
-  import: base, bound
+  import: base, bound, data-default, pointed, transformers
   hs-source-dirs: src/lam-tree
   exposed-modules: LamTree
   signatures: LamTreeS
 
 library debruijn-lam-tree
-  import: base, bound
+  import: base, bound, pointed, transformers
   exposed-modules: LamTreeB
   hs-source-dirs:  src/debruijn-lam-tree
 
 library naive-lam-tree
-  import:          base
-  build-depends:   transformers
+  import:          base, pointed, transformers
   exposed-modules: LamTreeN
   hs-source-dirs:  src/naive-lam-tree
 
 executable trees-from-bags
-  import:             base, bound
+  import:             base, bound, transformers
   main-is:            Main.hs
 
   build-depends:      naive-lam-tree

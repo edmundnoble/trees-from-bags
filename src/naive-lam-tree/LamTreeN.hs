@@ -1,9 +1,10 @@
 {-# language EmptyDataDeriving #-}
 {-# language DeriveAnyClass #-}
+{-# language DeriveFunctor #-}
 {-# language DerivingStrategies #-}
 {-# language GeneralizedNewtypeDeriving #-}
+{-# language StandaloneDeriving #-}
 {-# language TypeFamilies #-}
-{-# language PolyKinds #-}
 
 module LamTreeN(
         VarAnn(..),
@@ -15,15 +16,17 @@ module LamTreeN(
 import Control.Monad.Trans.Identity
 import Data.Void
 
-newtype VarAnn (lt :: * -> *) v = VarAnn () deriving newtype Show
+-- all of these kind annotations are needed because backpack doesn't accept
+-- extra polymorphism in the structure over what's in the signature.
+
+type VarAnn = ()
+
+type LitAnn = ()
 
 newtype LamAST (lt :: * -> *) v = LamAST (lt v) deriving newtype Show
 
-newtype LitAnn (lt :: * -> *) (v :: *) = LitAnn () deriving newtype Show
+data Extra (lt :: * -> *) (v :: *) deriving anyclass Show
 
-data Extra (lt :: * -> *) (v :: *) deriving Show
-
--- self-recursive!
 newtype AppArgAST lt (v :: *) = AppArgAST (lt v) deriving newtype Show
 
 newtype AppFunAST lt (v :: *) = AppFunAST (lt v) deriving newtype Show

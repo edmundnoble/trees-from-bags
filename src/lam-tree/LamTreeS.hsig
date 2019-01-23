@@ -17,8 +17,8 @@ data AppFunAST :: (* -> *) -> * -> *
 
 data LamAST :: (* -> *) -> * -> *
 
-data LitAnn :: (* -> *) -> * -> *
+data LitAnn :: *
 
-data VarAnn :: (* -> *) -> * -> *
+data VarAnn :: *
 
 data Extra :: (* -> *) -> * -> *
