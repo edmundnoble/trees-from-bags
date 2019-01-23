@@ -14,6 +14,7 @@ module LamTree(LamTree(..)) where
 
 import Control.Monad(ap)
 import Data.Default
+import Data.Functor.Bind
 import Data.Functor.Classes
 import Bound
 
@@ -83,9 +84,42 @@ instance (
         Bound AppArgAST,
         Bound AppFunAST,
         Bound LamAST,
+        Bound Extra) => Apply LamTree where
+        (<.>) = apDefault
+
+instance (
+        Functor (AppArgAST LamTree),
+        Functor (AppFunAST LamTree),
+        Functor (LamAST LamTree),
+        Default VarAnn,
+        Functor (Extra LamTree),
+        Bound AppArgAST,
+        Bound AppFunAST,
+        Bound LamAST,
         Bound Extra) => Applicative LamTree where
         pure = return
-        (<*>) = ap
+        (<*>) = (<.>)
+
+instance (
+        Functor (AppArgAST LamTree),
+        Functor (AppFunAST LamTree),
+        Functor (LamAST LamTree),
+        Default VarAnn,
+        Functor (Extra LamTree),
+        Bound AppArgAST,
+        Bound AppFunAST,
+        Bound LamAST,
+        Bound Extra) => Bind LamTree where
+        (AppR arg fun) >>- f
+                = AppR
+                (arg >>>= f)
+                (fun >>>= f)
+        (LamR a) >>- f
+                = LamR
+                (a >>>= f)
+        (VarR v _) >>- f = f v
+        (LitR i a) >>- _ = LitR i a
+        (ExtraR a) >>- f = ExtraR (a >>>= f)
 
 instance (
         Functor (AppArgAST LamTree),
@@ -98,13 +132,4 @@ instance (
         Bound LamAST,
         Bound Extra) => Monad LamTree where
         return v = VarR v def
-        (AppR arg fun) >>= f
-                = AppR
-                (arg >>>= f)
-                (fun >>>= f)
-        (LamR a) >>= f
-                = LamR
-                (a >>>= f)
-        (VarR v _) >>= f = f v
-        (LitR i a) >>= _ = LitR i a
-        (ExtraR a) >>= f = ExtraR (a >>>= f)
+        (>>=) = (>>-)

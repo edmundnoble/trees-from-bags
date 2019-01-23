@@ -60,8 +60,11 @@ common pointed
 common transformers
   build-depends: transformers==0.5.5.0
 
+common semigroupoids
+  build-depends: semigroupoids==5.3.2
+
 library lam-tree
-  import: base, bound, data-default, pointed, transformers
+  import: base, bound, data-default, pointed, semigroupoids
   hs-source-dirs: src/lam-tree
   exposed-modules: LamTree
   signatures: LamTreeS
