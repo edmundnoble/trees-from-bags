@@ -77,7 +77,6 @@ instance (
         Functor (AppArgAST LamTree),
         Functor (AppFunAST LamTree),
         Functor (LamAST LamTree),
-        Default LitAnn,
         Default VarAnn,
         Functor (Extra LamTree),
         Bound AppArgAST,
@@ -91,7 +90,6 @@ instance (
         Functor (AppArgAST LamTree),
         Functor (AppFunAST LamTree),
         Functor (LamAST LamTree),
-        Default LitAnn,
         Default VarAnn,
         Functor (Extra LamTree),
         Bound AppArgAST,
@@ -107,5 +105,5 @@ instance (
                 = LamR
                 (a >>>= f)
         (VarR v _) >>= f = f v
-        (LitR i _) >>= f = LitR i def
+        (LitR i a) >>= _ = LitR i a
         (ExtraR a) >>= f = ExtraR (a >>>= f)
